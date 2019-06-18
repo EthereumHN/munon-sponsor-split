@@ -1,0 +1,40 @@
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+Starting migrations...
+======================
+> Network name:    'mainnet'
+> Network id:      1
+> Block gas limit: 0x7a1200
+
+
+2_deploy_contracts.js
+=====================
+
+   Deploying 'Sponsorship'
+   -----------------------
+   > transaction hash:    0xe28d143a7132a1aef833e6951c7c788193e6da42dbf5fe604e482e14de5f0890
+   > Blocks: 2            Seconds: 24
+   > contract address:    0x3b95C834aa3DDC5E7B69e047Bd1eB1604B76f2C3
+   > block number:        7984475
+   > block timestamp:     1560890264
+   > account:             0x930A7CD60A633128B7c5181307781e6d033BA51a
+   > balance:             0.2212847753
+   > gas used:            890808
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01781616 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.01781616 ETH
+
+
+Summary
+=======
+> Total deployments:   1
+> Final cost:          0.01781616 ETH

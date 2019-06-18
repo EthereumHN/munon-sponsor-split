@@ -53,7 +53,9 @@ const Header = () => {
             className="mr-1"
             color="primary"
           />
-          Balance: {balance} {money}
+          <span className="mt-1">
+            Balance: {balance} {money}
+          </span>
         </NavItem>
         <NavItem className="ml-2 mr-4 mt-4 pt-1 text-left ">
           <Link
