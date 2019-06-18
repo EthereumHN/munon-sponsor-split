@@ -5,6 +5,7 @@ import connectors from "./connectors";
 import ConnectWallet from "./components/ConnectWallet";
 import Header from "./components/Header";
 import Transaction from "./components/Transaction";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import web3 from "web3";
 import Split from "./components/Split";
@@ -23,9 +24,11 @@ const App = () => {
         libraryName={"web3.js"}
         web3Api={web3}
       >
-        <Header />
-        <Transaction />
-        <Split />
+        <Router>
+          <Header />
+          <Transaction />
+          <Route path="/admin" exact component={Split} />
+        </Router>
       </Web3Provider>
     );
   } else {
