@@ -39,7 +39,7 @@ const Header = () => {
     <>
       <Nav className="mt-4 justify-content-end">
         <NavItem className="ml-2 mr-4 mt-4 pt-1 text-left ">
-          <Link href="/" color="secondary">
+          <Link href="/" color="secondary" className="secondary">
             <span>
               <Icon name="Home" size="20" className="mr-1" />
               Home
@@ -65,6 +65,7 @@ const Header = () => {
               context.unsetConnector();
               setAccount(null);
             }}
+            className="secondary"
           >
             <span>
               <Icon name="ExitToApp" size="20" className="mr-1" />
