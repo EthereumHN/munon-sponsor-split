@@ -40,7 +40,7 @@ const Split = () => {
   }
 
   async function getHackathonData() {
-    let tguHack = await munonInstance.methods.hackathons(1).call();
+    let tguHack = await munonInstance.methods.hackathons(2).call();
     let spsHack = await munonInstance.methods.hackathons(1).call();
     let tguValue = context.library.utils.fromWei(tguHack.pot._hex, "ether");
     setTguBalance(tguValue);
