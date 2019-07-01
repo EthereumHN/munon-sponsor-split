@@ -1,5 +1,4 @@
 import React, { useGlobal, useEffect, useState } from "reactn";
-import { useWeb3Context } from "web3-react";
 import { Alert, Nav, NavItem } from "reactstrap";
 import { Blockie, Link, Icon } from "rimble-ui";
 import "./Header.scss";
@@ -7,19 +6,23 @@ import "./Header.scss";
 const Header = () => {
   const [balance, setBalance] = useGlobal("balance");
   const [account, setAccount] = useGlobal("account");
+  const [web3Provider, setWeb3Provider] = useGlobal("web3Provider");
+  const [networkId, setNetworkId] = useGlobal("networkId");
 
   useEffect(() => {
     const fetchData = async () => {
-      var value = await context.library.eth.getBalance(account);
-      value = await context.library.utils.fromWei(value, "ether");
-      setBalance(value);
+      if (account) {
+        var value = await web3Provider.eth.getBalance(account);
+        value = await web3Provider.utils.fromWei(value, "ether");
+        setBalance(value);
+      }
     };
 
     fetchData();
   }, []);
-  const context = useWeb3Context();
-  const { networkId } = context;
+
   let money = "";
+
   switch (networkId) {
     case 100:
       money = "xDAI";
@@ -62,7 +65,7 @@ const Header = () => {
             href="#"
             color="secondary"
             onClick={() => {
-              context.unsetConnector();
+              setWeb3Provider(null);
               setAccount(null);
             }}
             className="secondary"

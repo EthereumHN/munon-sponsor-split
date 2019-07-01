@@ -1,42 +1,54 @@
 import React, { useGlobal, useEffect, useState } from "reactn";
-import { useWeb3Context } from "web3-react";
 import { Heading, Input, Button, Card, Text, Icon, Image } from "rimble-ui";
 import { Container } from "reactstrap";
 import SponsorshipContract from "../contracts/Sponsorship.json";
 
 const Transaction = () => {
-  const context = useWeb3Context();
+  const [web3Provider, setWeb3Provider] = useGlobal("web3Provider");
   const [transactionHash, setTransactionHash] = useState(0);
   const [sponsorBalance, setSponsorBalance] = useGlobal("sponsorValue");
   const [balance, setBalance] = useGlobal("balance");
-  const [value, setValue] = useState("");
-  const sponsorshipInstance = context.library.eth.Contract(
-    SponsorshipContract.abi,
-    SponsorshipContract.networks[context.networkId].address
+  const [networkId, setNetworkId] = useGlobal("networkId");
+  const [sponsorshipInstance, setSponsorshipInstance] = useGlobal(
+    "sponsorshipInstance"
   );
+  const [value, setValue] = useState("");
+
   useEffect(() => {
     getSponsorData();
   }, []);
 
-  async function getUserBalance() {
-    var value = await context.library.eth.getBalance(context.account);
-    value = await context.library.utils.fromWei(value, "ether");
-    setBalance(value);
-  }
-
   async function getSponsorData() {
-    var sponsorValue = await context.library.eth.getBalance(
+    web3Provider.eth.net.getId().then(result => console.log(result));
+    const networkId = await web3Provider.eth.net.getId();
+
+    setNetworkId(networkId);
+
+    const sponsorshipInstance = web3Provider.eth.Contract(
+      SponsorshipContract.abi,
+      SponsorshipContract.networks[networkId].address
+    );
+
+    setSponsorshipInstance(sponsorshipInstance);
+    var sponsorValue = await web3Provider.eth.getBalance(
       sponsorshipInstance.address
     );
-    sponsorValue = context.library.utils.fromWei(sponsorValue, "ether");
+
+    sponsorValue = web3Provider.utils.fromWei(sponsorValue, "ether");
     setSponsorBalance(sponsorValue);
+  }
+
+  async function getUserBalance() {
+    var value = await web3Provider.eth.getBalance(web3Provider.account);
+    value = await web3Provider.utils.fromWei(value, "ether");
+    setBalance(value);
   }
 
   function sendTransaction() {
     sponsorshipInstance.methods.addSponsorship
       .send({
-        value: context.library.utils.toWei(value, "ether"),
-        from: context.account
+        value: web3Provider.utils.toWei(value, "ether"),
+        from: web3Provider.account
       })
       .on("transactionHash", hash => {
         setValue("");
